@@ -1,15 +1,12 @@
 /*
  * test_device.ino — 互動式模組測試
  * 
- * Serial Monitor (9600 baud) 輸入數字選擇測試項目。
- * 透過相對路徑引用 clapping_device/ 的模組，測試同一份程式碼。
+ * 透過將模組複製到本地，測試同一份程式碼。
  */
 
-#include "../clapping_device/config.h"
-#include "../clapping_device/hardware.h"
-#include "../clapping_device/hardware.cpp"
-#include "../clapping_device/clap_engine.h"
-#include "../clapping_device/clap_engine.cpp"
+#include "config.h"
+#include "hardware.h"
+#include "clap_engine.h"
 
 void printMenu();
 void testUltrasonic();

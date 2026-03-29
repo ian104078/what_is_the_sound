@@ -44,12 +44,9 @@ void setup() {
     Serial.println(F("[INIT] Switch OK"));
 
     if (!audioInit()) {
-        Serial.println(F("[ERROR] DFPlayer FAILED! Check wiring/SD card."));
-        pinMode(LED_BUILTIN, OUTPUT);
-        while (true) {
-            digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-            delay(200);
-        }
+        Serial.println(F("[WARN] DFPlayer 模組未接上！將切換為純 Serial 傳輸模式供電腦播放音效。"));
+    } else {
+        Serial.println(F("[INIT] DFPlayer OK"));
     }
     Serial.println(F("[INIT] DFPlayer OK"));
 

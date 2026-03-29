@@ -99,18 +99,13 @@ void servosDetach() {
 static SoftwareSerial _dfSerial(PIN_DFPLAYER_RX, PIN_DFPLAYER_TX);
 static DFRobotDFPlayerMini _player;
 static unsigned long _lastPlayTime = 0;
-static bool _audioEnabled = false;
 
 bool audioInit() {
     _dfSerial.begin(9600);
     delay(1000);  // 等待 DFPlayer 開機
 
-    if (!_player.begin(_dfSerial, true, true)) {
-        _audioEnabled = false;
-        return false;
-    }
+    if (!_player.begin(_dfSerial, true, true)) return false;
 
-    _audioEnabled = true;
     _player.setTimeOut(500);
     _player.volume(VOLUME_MIN);
     _player.EQ(DFPLAYER_EQ_NORMAL);
@@ -119,19 +114,16 @@ bool audioInit() {
 }
 
 void audioSetVolume(uint8_t vol) {
-    if (!_audioEnabled) return;
     _player.volume(constrain(vol, 0, 30));
 }
 
 void audioPlay() {
-    if (!_audioEnabled) return; // Even if not enabled, we still want to skip playing hardware sound. That's fine.
     if (!audioIsReady()) return;
     _player.play(1);
     _lastPlayTime = millis();
 }
 
 bool audioIsReady() {
-    if (!_audioEnabled) return true; // Pretend it's ready so logic doesn't block.
     return (millis() - _lastPlayTime) >= AUDIO_RATE_LIMIT_MS;
 }
 
